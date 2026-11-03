@@ -25,7 +25,7 @@ Park. All five are on the Blue Line's Forest Park branch.
 - `supplement_code.py`: analysis code shown in the two-page PDF
 - `cta_recovery_analysis.py`: full analysis and chart function
 - `cta_station_recovery.csv`: processed station-level analysis data
-- [Zixin_Hu_Programming_Supplement.pdf](Zixin_Hu_Programming_Supplement.pdf): final two-page PDF
+- [Zixin_Hu_CTA_Ridership_Recovery_Supplement.pdf](Zixin_Hu_CTA_Ridership_Recovery_Supplement.pdf): final two-page PDF
 - `requirements.txt`: Python dependencies
 
 ## Data sources
