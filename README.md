@@ -4,15 +4,18 @@ This repository contains a short Python analysis of station-level CTA rail
 entries and the two-page programming supplement prepared for the University of
 Chicago MS in Applied Data Science application.
 
+[View the two-page programming supplement](Zixin_Hu_CTA_Ridership_Recovery_Supplement.pdf)
+
 ## Research question
 
 Which CTA rail stations lagged the system's recovery between 2019 and 2025?
 
 The analysis uses annual station entry totals from the CTA Annual Ridership
 Reports. Each report yields 142 station totals. Matching but excluding one
-closed station in 2019 and one new station in 2025 leaves 140 stations with
-entries in both years. Two stations reopened in July 2025 and are retained in
-the data but marked as non-comparable for the recovery analysis.
+closed station in 2019 and one new station in 2025 leaves 141 common stations.
+Kostner is then removed by the 100,000-entry 2019 threshold, leaving 140 rows in
+the recovery table. Two stations reopened in July 2025 and are retained in the
+data but marked as non-comparable for the recovery analysis.
 
 ## Main result
 
@@ -31,6 +34,8 @@ Park. All five are on the Blue Line's Forest Park branch.
 - `cta_station_entries_2019.csv`: all 142 CTA station totals extracted from the 2019 report
 - `cta_station_entries_2025.csv`: all 142 CTA station totals extracted from the 2025 report
 - `cta_station_recovery.csv`: 140 matched stations with a `comparable` flag
+- `validate_data.py`: checks row counts, keys, exclusions, and the reported median
+- [DATA_DICTIONARY.md](DATA_DICTIONARY.md): field definitions and processing rules
 - [Zixin_Hu_CTA_Ridership_Recovery_Supplement.pdf](Zixin_Hu_CTA_Ridership_Recovery_Supplement.pdf): final two-page PDF
 - `requirements.txt`: Python dependencies
 
@@ -45,6 +50,7 @@ Park. All five are on the Blue Line's Forest Park branch.
 ```bash
 python -m pip install -r requirements.txt
 python cta_extract.py
+python validate_data.py
 python supplement_code.py
 ```
 

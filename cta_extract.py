@@ -235,7 +235,7 @@ def main() -> None:
 
     output = PROCESSED / "cta_station_recovery.csv"
     combined.to_csv(output, index=False)
-    print(f"Wrote {len(combined)} matched stations to {output}")
+    print(f"Wrote {len(combined)} stations after the 2019 base threshold to {output}")
     print(combined.head(12).to_string(index=False))
     print(combined.tail(12).to_string(index=False))
 
