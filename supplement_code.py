@@ -17,6 +17,7 @@ def load_rides(path):
         "line": "string",
         "entries_2019": "Int64",
         "entries_2025": "Int64",
+        "comparable": "boolean",
     }
     rides = pd.read_csv(path, dtype=types)
     rides["station"] = rides["station"].str.strip()
@@ -26,6 +27,7 @@ def load_rides(path):
 
 def recovery_table(rides, min_base=100_000):
     rides = rides.dropna(subset=["station", "line", "entries_2019", "entries_2025"])
+    rides = rides[rides["comparable"]]
     rides = rides[(rides["entries_2019"] >= min_base) & (rides["entries_2025"] > 0)]
     rides["recovery"] = 100 * rides["entries_2025"] / rides["entries_2019"]
     return rides.sort_values("recovery").reset_index(drop=True)
@@ -40,7 +42,7 @@ stations = recovery_table(rides)
 line_medians = line_profile(stations)
 slowest = stations.nsmallest(5, "recovery")
 
-print(f"Stations analyzed: {len(stations)}")
+print(f"Comparable stations: {len(stations)}")
 print(f"Median recovery: {stations['recovery'].median():.1f}%")
 print("\nSlowest stations:")
 print(slowest[["station", "line", "recovery"]].to_string(index=False))

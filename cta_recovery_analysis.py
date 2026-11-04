@@ -16,6 +16,7 @@ def load_station_recovery(path: Path) -> pd.DataFrame:
         "line": "string",
         "entries_2019": "Int64",
         "entries_2025": "Int64",
+        "comparable": "boolean",
     }
     rides = pd.read_csv(path, dtype=dtypes)
     rides["station"] = rides["station"].str.strip()
@@ -27,6 +28,7 @@ def recovery_table(rides: pd.DataFrame, min_base: int = 100_000) -> pd.DataFrame
     usable = rides.dropna(
         subset=["station", "line", "entries_2019", "entries_2025"]
     ).copy()
+    usable = usable[usable["comparable"]]
     usable = usable.query(
         "entries_2019 >= @min_base and entries_2025 > 0"
     )
@@ -106,7 +108,7 @@ def main() -> None:
         stations.groupby("line", observed=True)["recovery"].median().sort_values()
     )
 
-    print(f"Analyzed {len(stations)} stations with at least 100,000 entries in 2019.")
+    print(f"Analyzed {len(stations)} comparable stations.")
     print(f"Median station recovery: {stations['recovery'].median():.1f}%")
     print("\nLowest-recovery stations:")
     print(stations[["station", "line", "recovery"]].head(8).to_string(index=False))
